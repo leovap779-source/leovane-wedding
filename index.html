@@ -73,18 +73,18 @@
     }
 
     /* escena y envolvente */
-    .env-scene { perspective: 1200px; }
+    .env-scene { perspective: 1200px; width: 100%; display: flex; justify-content: center; }
     .env-wrap {
       position: relative;
-      width: clamp(260px, 44vw, 400px);
+      width: clamp(300px, min(88vw, calc(74vh * 1.65)), 700px);
       animation: envFloat 3.6s ease-in-out infinite;
       transition: filter .3s;
     }
-    .env-wrap:hover { filter: brightness(1.05); }
+    .env-wrap:hover { filter: brightness(1.06); }
     .env-wrap.clicked { animation: none; }
     @keyframes envFloat {
       0%,100% { transform: translateY(0px); }
-      50%      { transform: translateY(-14px); }
+      50%      { transform: translateY(-16px); }
     }
 
     /* cuerpo del sobre */
@@ -294,6 +294,19 @@
       background: linear-gradient(to bottom,
         rgba(31,36,48,.08) 0%, rgba(31,36,48,.36) 52%, rgba(31,36,48,.65) 100%);
     }
+    /* foto de fondo (cuando la actives) */
+    .hero-photo {
+      position: absolute; inset: 0; z-index: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center 30%;
+    }
+    /* cuando hay foto, oscurecer más el overlay */
+    #hero:has(.hero-photo) .hero-overlay {
+      background: linear-gradient(to bottom,
+        rgba(31,36,48,.25) 0%, rgba(31,36,48,.48) 50%, rgba(31,36,48,.72) 100%);
+    }
+    #hero:has(.hero-photo) .hero-bg { display: none; }
+
     /* noise grain */
     .hero-grain {
       position: absolute; inset: 0; z-index: 2; pointer-events: none; opacity: .055;
@@ -482,14 +495,22 @@
     #galeria .big-title { color: var(--lino); }
     #galeria .eyebrow   { color: rgba(167,176,138,.6); }
 
-    /* slider container */
+    /* slider container — portrait 4:5 para fotos 1080×1350 */
     .sl-wrap {
       position: relative;
-      width: 100%; aspect-ratio: 16/9;
+      width: 100%;
+      aspect-ratio: 4/5;
+      max-height: 88vh;
       overflow: hidden;
     }
-    @media (max-width: 768px) { .sl-wrap { aspect-ratio: 4/3; } }
-    @media (max-width: 480px) { .sl-wrap { aspect-ratio: 1; } }
+    /* en desktop: mostrar en formato más ancho centrado */
+    @media (min-width: 900px) {
+      .sl-wrap {
+        width: min(52vw, calc(88vh * 0.8));
+        aspect-ratio: 4/5;
+        margin: 0 auto;
+      }
+    }
 
     /* individual slide */
     .sl-slide {
@@ -625,6 +646,92 @@
       white-space: nowrap;
     }
     @media (max-width: 520px) { .lb-prev { left: .5rem; } .lb-next { right: .5rem; } }
+
+    /* ══════════════════════════════════════════════
+       PARALLAX INTERLUDE
+    ══════════════════════════════════════════════ */
+    .par-section {
+      position: relative; height: 92vh; min-height: 500px;
+      overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .par-bg {
+      position: absolute; inset: -18%;
+      background-size: cover; background-position: center 30%;
+      will-change: transform;
+      transform: scale(1.2);
+    }
+    /* textura grain editorial sobre la foto */
+    .par-grain {
+      position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      opacity: .07;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 180px 180px;
+    }
+    /* overlay degradado elegante */
+    .par-overlay {
+      position: absolute; inset: 0; z-index: 2;
+      background:
+        linear-gradient(to bottom,
+          rgba(31,36,48,.55) 0%,
+          rgba(31,36,48,.28) 40%,
+          rgba(31,36,48,.28) 60%,
+          rgba(31,36,48,.65) 100%);
+    }
+    /* línea decorativa lateral izquierda */
+    .par-section::before {
+      content: '';
+      position: absolute; left: clamp(1.5rem,4vw,3.5rem); top: 12%; bottom: 12%;
+      width: 1px; background: rgba(201,162,122,.35); z-index: 4;
+    }
+    .par-section::after {
+      content: '';
+      position: absolute; right: clamp(1.5rem,4vw,3.5rem); top: 12%; bottom: 12%;
+      width: 1px; background: rgba(201,162,122,.35); z-index: 4;
+    }
+    .par-content {
+      position: relative; z-index: 5;
+      text-align: center; padding: 2rem clamp(3rem,8vw,7rem);
+      display: flex; flex-direction: column; align-items: center; gap: 1.5rem;
+    }
+    .par-eyebrow {
+      font-family: 'DM Sans', sans-serif; font-weight: 300;
+      font-size: .6rem; letter-spacing: .38rem; text-transform: uppercase;
+      color: rgba(201,162,122,.75);
+    }
+    .par-quote {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 300; font-style: italic;
+      font-size: clamp(2rem, 5.5vw, 4.2rem);
+      color: var(--lino); line-height: 1.18;
+      text-shadow: 0 2px 28px rgba(0,0,0,.28);
+    }
+    .par-rule {
+      display: flex; align-items: center; gap: 1rem;
+      width: 100%; max-width: 320px;
+    }
+    .par-rule::before, .par-rule::after {
+      content: ''; flex: 1; height: 1px;
+      background: rgba(201,162,122,.45);
+    }
+    .par-rule span {
+      font-size: .85rem; color: rgba(201,162,122,.7); letter-spacing: .2rem;
+    }
+    .par-names {
+      font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 300;
+      font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+      color: rgba(231,228,218,.85); letter-spacing: .06em;
+    }
+    .par-names .amp { color: var(--caramelo); font-style: italic; }
+
+    /* scroll progress bar */
+    #scroll-bar {
+      position: fixed; top: 0; left: 0; z-index: 9000;
+      height: 2px; width: 0%;
+      background: linear-gradient(90deg, var(--caramelo), var(--olivo));
+      transition: width .1s linear;
+      pointer-events: none;
+    }
 
     /* ══════════════════════════════════════════════
        5. DRESSCODE
@@ -850,6 +957,9 @@
   </p>
 </div>
 
+<!-- scroll progress bar -->
+<div id="scroll-bar"></div>
+
 <!-- dual cursor -->
 <div id="cur-dot"></div>
 <div id="cur-ring"></div>
@@ -881,6 +991,7 @@
 <!-- ══ 1. HERO ══════════════════════════════════ -->
 <section id="hero">
   <div class="hero-bg"></div>
+  <img class="hero-photo" src="images/2hero.webp.webp" alt="Leo & Vane" loading="eager">
   <div class="hero-overlay"></div>
   <div class="hero-grain"></div>
   <div class="particles" id="particles"></div>
@@ -1002,6 +1113,28 @@
   </div>
 </section>
 
+<!-- ══ PARALLAX INTERLUDE ════════════════════════ -->
+<!--
+  FOTO DEL PARALLAX:
+  Cambia el src por cualquiera de tus fotos de galería,
+  idealmente una horizontal o de los dos.
+  Ejemplo: src="images/gallery/tu-foto.webp"
+-->
+<section class="par-section" id="par1">
+  <div class="par-bg" id="par1bg" style="background-image:url('images/2hero.webp.webp')"></div>
+  <div class="par-grain"></div>
+  <div class="par-overlay"></div>
+  <div class="par-content">
+    <span class="par-eyebrow reveal">17 de octubre · 2026</span>
+    <div class="par-rule reveal"><span>✦</span></div>
+    <p class="par-quote reveal">
+      "El amor no se mira,<br>se vive juntos"
+    </p>
+    <div class="par-rule reveal"><span>✦</span></div>
+    <p class="par-names reveal">Leo <span class="amp">&amp;</span> Vane</p>
+  </div>
+</section>
+
 <!-- ══ 5. DRESSCODE ═════════════════════════════ -->
 <section id="dresscode">
   <span class="eyebrow reveal">lo que vestirás</span>
@@ -1029,7 +1162,7 @@
     <div class="gift-card reveal">
       <div class="gift-icon">📦</div>
       <div class="gift-name">Lista Amazon</div>
-      <a href="#amazon" target="_blank" rel="noopener" class="pill gift-pill-dark" style="margin-top:.4rem;">Ver lista</a>
+      <a href="https://www.amazon.com.mx/wedding/guest-view/IJPWBNHN0EY8" target="_blank" rel="noopener" class="pill gift-pill-dark" style="margin-top:.4rem;">Ver lista</a>
     </div>
     <div class="gift-card reveal" data-delay=".14">
       <div class="gift-icon">💳</div>
@@ -1102,6 +1235,29 @@
 </footer>
 
 <script>
+/* ─── SCROLL PROGRESS BAR ───────────────────────── */
+const scrollBar = document.getElementById('scroll-bar');
+window.addEventListener('scroll', () => {
+  const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+  scrollBar.style.width = pct + '%';
+}, { passive: true });
+
+/* ─── PARALLAX ───────────────────────────────────── */
+const parSections = document.querySelectorAll('.par-section');
+function runParallax() {
+  parSections.forEach(sec => {
+    const bg = sec.querySelector('.par-bg');
+    if (!bg) return;
+    const rect = sec.getBoundingClientRect();
+    if (rect.bottom < 0 || rect.top > window.innerHeight) return;
+    const speed = 0.38;
+    const mid   = rect.top + rect.height / 2 - window.innerHeight / 2;
+    bg.style.transform = `translateY(${mid * speed}px) scale(1.22)`;
+  });
+}
+window.addEventListener('scroll', runParallax, { passive: true });
+runParallax();
+
 /* ─── INTRO ENVELOPE ─────────────────────────────── */
 (function() {
   document.body.classList.add('intro-on');
@@ -1254,10 +1410,20 @@ function tick() {
 tick(); setInterval(tick, 1000);
 
 /* ─── SLIDER GALERÍA (crossfade + Ken Burns) ─────── */
-const TOTAL   = 15;
-const SHADES  = ['#A7B08A','#98A47E','#B2BB98','#8E9A72','#A7B08A','#B8C0A4','#9DAA82','#AAB590'];
-const RATIOS  = [1,4/3,3/4,3/4,16/9,1,3/4,4/3,1,3/4,16/9,1,4/3,3/4,1];
+const TOTAL      = 15;
+const SLIDE_RATIO = 4/5;   // 1080 × 1350 px (portrait)
+const SHADES     = ['#A7B08A','#98A47E','#B2BB98','#8E9A72','#A7B08A','#B8C0A4','#9DAA82','#AAB590'];
 const AUTOPLAY_MS = 4200;
+
+/*
+  Fotos de galería — ajusta el número final y la extensión
+  si tus archivos se llaman diferente (ej: .jpg en vez de .webp).
+  Las fotos que no existan mostrarán un placeholder automáticamente.
+*/
+const EXT    = 'jpg';
+const PHOTOS = Array.from({ length: 15 }, (_, i) =>
+  `Mesa de trabajo ${i + 1}.${EXT}`
+);
 
 const slWrap    = document.getElementById('slWrap');
 const slBar     = document.getElementById('slBar');
@@ -1274,14 +1440,32 @@ const slides = [];
 for (let i = 0; i < TOTAL; i++) {
   const s = document.createElement('div');
   s.className = 'sl-slide' + (i===0?' active':'');
+
   const ph = document.createElement('div'); ph.className = 'sl-ph';
-  const inn = document.createElement('div'); inn.className = 'sl-ph-inner';
+  const inn = document.createElement('div');
+  inn.className = 'sl-ph-inner';
   inn.style.background = SHADES[i % SHADES.length];
-  inn.innerHTML = `<span>foto ${i+1}</span>`;
+
+  if (PHOTOS[i]) {
+    const img = document.createElement('img');
+    // encodeURIComponent maneja espacios y caracteres especiales en el nombre
+    img.src = `images/gallery/${encodeURIComponent(PHOTOS[i])}`;
+    img.alt = `Leo & Vane — foto ${i+1}`;
+    img.loading = i < 3 ? 'eager' : 'lazy';
+    img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;';
+    img.onerror = () => { inn.style.background = SHADES[i % SHADES.length]; img.remove(); };
+    inn.appendChild(img);
+  } else {
+    const lbl = document.createElement('span');
+    lbl.textContent = `foto ${i+1}`;
+    inn.appendChild(lbl);
+  }
+
   ph.appendChild(inn); s.appendChild(ph);
   s.addEventListener('click', () => openLb(i));
   slWrap.insertBefore(s, document.getElementById('slPrev'));
   slides.push(s);
+
   // dot
   const dot = document.createElement('div'); dot.className = 'sl-dot'+(i===0?' active':'');
   dot.addEventListener('click', () => goTo(i));
