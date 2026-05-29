@@ -1198,9 +1198,10 @@
       .hero-body { text-align: left; padding: 1.5rem; max-width: 100%; }
       .hero-names { justify-content: flex-start; }
       .hero-rule  { margin: 1.5rem 0; }
-      /* parallax — siempre izquierda */
-      .par-section { justify-content: flex-start; }
+      /* parallax — izquierda + cuadrado 1:1 en móvil (1080×1080) */
+      .par-section { justify-content: flex-start; height: auto; aspect-ratio: 1/1; min-height: unset; }
       .par-content { text-align: left; align-items: flex-start; padding: 2rem 1.5rem; max-width: 94vw; }
+      .par-quote   { font-size: clamp(1.3rem, 5.5vw, 2.2rem); }
       .par-quote   { font-size: clamp(1.3rem, 5vw, 2.2rem); }
       /* tc */
       .tc-text { font-size: clamp(48px, 16vw, 120px); }
