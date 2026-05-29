@@ -930,6 +930,29 @@
       font-family: 'DM Sans', sans-serif; font-size: .73rem;
       letter-spacing: .14rem; color: rgba(167,176,138,.38); margin-top: .8rem;
     }
+    /* botón volver arriba */
+    .btn-top {
+      display: inline-flex; flex-direction: column;
+      align-items: center; gap: .45rem;
+      margin-top: 2.5rem; cursor: none;
+      background: none; border: 1px solid rgba(167,176,138,.22);
+      border-radius: 100px; padding: .9rem 1.8rem;
+      color: rgba(231,228,218,.5);
+      font-family: 'DM Sans', sans-serif; font-size: .6rem;
+      letter-spacing: .24rem; text-transform: uppercase;
+      transition: border-color .3s, color .3s, transform .35s var(--ease);
+    }
+    .btn-top:hover {
+      border-color: var(--caramelo); color: var(--caramelo);
+      transform: translateY(-3px);
+    }
+    .btn-top svg {
+      animation: arrowBounceUp 1.8s ease-in-out infinite;
+    }
+    @keyframes arrowBounceUp {
+      0%,100% { transform: translateY(0); opacity: .5; }
+      50%      { transform: translateY(-5px); opacity: 1; }
+    }
     /* ── TEXTO CON FOTO (background-clip) ─────────── */
     .tc-section {
       background: var(--noche); overflow: hidden;
@@ -1245,8 +1268,8 @@
 <section id="hero">
   <div class="hero-bg" data-depth="0.18"></div>
   <picture data-depth="0.28">
-    <source media="(max-width: 768px)" srcset="images/hero movil.jpg">
-    <img class="hero-photo" src="images/hero 3.jpg" alt="Leo & Vane" loading="eager">
+    <source media="(max-width: 768px)" srcset="images/hero%20movil.jpg">
+    <img class="hero-photo" src="images/hero%203.jpg" alt="Leo & Vane" loading="eager">
   </picture>
   <div class="hero-overlay" data-depth="0.12"></div>
   <div class="hero-grain"></div>
@@ -1407,7 +1430,7 @@
 <section class="par-section" id="par1">
   <div class="par-bg" id="par1bg">
     <picture>
-      <source media="(max-width: 768px)" srcset="images/frase movil.jpg">
+      <source media="(max-width: 768px)" srcset="images/frase%20movil.jpg">
       <img src="images/frase.jpg" alt="" aria-hidden="true" loading="lazy">
     </picture>
   </div>
@@ -1540,9 +1563,22 @@
   <div class="ft-names reveal">Leo <span class="amp">&amp;</span> Vane</div>
   <div class="ft-date reveal">17 · 10 · 2026</div>
   <div class="ft-phrase reveal">Con amor, los esperamos</div>
+
+  <button class="btn-top reveal" id="btnTop" aria-label="Volver al inicio">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="18 15 12 9 6 15"/>
+    </svg>
+    Volver al inicio
+  </button>
 </footer>
 
 <script>
+/* ─── BOTÓN VOLVER ARRIBA ───────────────────────── */
+document.getElementById('btnTop').addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
 /* ─── SCROLL TO TOP ON LOAD ────────────────────── */
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 window.scrollTo({ top: 0, behavior: 'instant' });
