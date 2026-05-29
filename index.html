@@ -1076,7 +1076,7 @@
     .hn-amp {
       display: inline-block; font-style: italic; color: var(--caramelo);
       opacity: 0; transform: scale(.2) rotate(-25deg);
-      animation: hnPop 1.1s cubic-bezier(.34,1.56,.64,1) .78s forwards;
+      /* animación controlada por clase .pulse vía JS */
     }
     .hn-vane {
       display: inline-block;
@@ -1086,18 +1086,39 @@
     @keyframes hnSlide { to { opacity:1; transform:translateX(0) skewX(0deg); } }
     @keyframes hnPop   { to { opacity:1; transform:scale(1) rotate(0deg); } }
 
-    /* ══ TC SECTION — animación reveal ══════════ */
-    .tc-text {
-      opacity: 0; filter: blur(12px);
-      animation-play-state: paused;
-      animation: tcReveal 1.6s cubic-bezier(.16,1,.3,1) both;
+    /* ══ TC SECTION — sweep de izquierda a derecha ══ */
+    .tc-text { clip-path: inset(0 100% 0 0); }
+    .tc-section.vis .tc-text {
+      animation: tcSweep 1.7s cubic-bezier(.16,1,.3,1) forwards,
+                 tcDrift 20s 1.7s ease-in-out infinite alternate;
     }
-    .tc-section.vis .tc-text { animation-play-state: running; }
-    @keyframes tcReveal {
-      0%  { opacity:0; filter:blur(12px); transform:scale(1.08); }
-      50% { opacity:1; filter:blur(0); transform:scale(1); }
-      100%{ opacity:1; filter:blur(0); transform:scale(1); }
+    @keyframes tcSweep {
+      from { clip-path: inset(0 100% 0 0); }
+      to   { clip-path: inset(0 0%   0 0); }
     }
+    @keyframes tcDrift {
+      from { background-position: center 28%; background-size: cover; }
+      to   { background-position: center 50%; background-size: 110%; }
+    }
+
+    /* ══ HERO — letra por letra ══════════════════ */
+    .hn-leo, .hn-vane { display: inline-flex; gap: 0; overflow: visible; }
+    .hl {
+      display: inline-block;
+      opacity: 0; transform: translateY(60px) rotate(-4deg);
+      animation: hlRise .65s cubic-bezier(.16,1,.3,1) both;
+    }
+    @keyframes hlRise { to { opacity:1; transform:translateY(0) rotate(0deg); } }
+
+    /* & — pulso continuo después de aparecer */
+    @keyframes ampGlow {
+      0%,100% { transform:scale(1) rotate(0deg);   color:var(--caramelo); }
+      50%      { transform:scale(1.15) rotate(6deg); color:#F0D080; }
+    }
+    .hn-amp.pulse { animation: hnPop 1.1s cubic-bezier(.34,1.56,.64,1) .78s forwards, ampGlow 3.5s ease-in-out 2.5s infinite; }
+
+    /* desactivar parallax en touch/mobile */
+    @media (hover: none) { [data-depth] { transform: none !important; } }
 
     /* ══ DRESSCODE — SVG FASHION ICONS ═══════════ */
     .dc-icons {
@@ -1188,36 +1209,6 @@
 </head>
 <body>
 
-<!-- ══ INTRO — SOBRE ANIMADO ════════════════════ -->
-<div id="intro">
-  <div id="introStars" style="position:absolute;inset:0;overflow:hidden;pointer-events:none;"></div>
-
-  <span class="i-label">Una invitación especial</span>
-
-  <div class="env-scene">
-    <div class="env-wrap" id="envWrap">
-      <div class="env-body">
-        <!-- nombres visibles dentro del sobre -->
-        <div class="env-inner" id="envInner">
-          <span class="env-inner-name">Leo <span class="amp">&amp;</span> Vane</span>
-          <span class="env-inner-date">17 · 10 · 2026</span>
-        </div>
-        <!-- solapa -->
-        <div class="env-flap" id="envFlap"></div>
-        <!-- sello de cera -->
-        <div class="env-seal" id="envSeal">
-          <span class="env-seal-glyph">&amp;</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <p class="i-hint" id="iHint">
-    <span class="i-hint-arrow"></span>
-    Toca para abrir
-    <span class="i-hint-arrow" style="transform:rotate(135deg);"></span>
-  </p>
-</div>
 
 <!-- scroll progress bar -->
 <div id="scroll-bar"></div>
@@ -1552,6 +1543,28 @@
 </footer>
 
 <script>
+/* ─── SCROLL TO TOP ON LOAD ────────────────────── */
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+window.scrollTo({ top: 0, behavior: 'instant' });
+
+/* ─── HERO — LETRA POR LETRA ────────────────────── */
+(function splitHeroLetters() {
+  ['.hn-leo', '.hn-vane'].forEach((sel, wi) => {
+    const el = document.querySelector(sel);
+    if (!el || el.dataset.split) return;
+    el.dataset.split = '1';
+    const baseDelay = wi === 0 ? .35 : .55;
+    el.innerHTML = [...el.textContent].map((c, i) =>
+      `<span class="hl" style="animation-delay:${(baseDelay + i * .075).toFixed(3)}s">${c}</span>`
+    ).join('');
+  });
+  // & pulse contínuo después de que termina su animación pop
+  setTimeout(() => {
+    const amp = document.querySelector('.hn-amp');
+    if (amp) amp.classList.add('pulse');
+  }, 2300);
+})();
+
 /* ─── SCROLL PROGRESS BAR ───────────────────────── */
 const scrollBar = document.getElementById('scroll-bar');
 window.addEventListener('scroll', () => {
@@ -1575,65 +1588,6 @@ function runParallax() {
 window.addEventListener('scroll', runParallax, { passive: true });
 runParallax();
 
-/* ─── INTRO ENVELOPE ─────────────────────────────── */
-(function() {
-  document.body.classList.add('intro-on');
-
-  const intro   = document.getElementById('intro');
-  const envWrap = document.getElementById('envWrap');
-  const envFlap = document.getElementById('envFlap');
-  const envSeal = document.getElementById('envSeal');
-  const envInner= document.getElementById('envInner');
-  const iHint   = document.getElementById('iHint');
-  const stars   = document.getElementById('introStars');
-
-  // twinkling star particles
-  for (let i = 0; i < 60; i++) {
-    const s = document.createElement('div');
-    s.className = 'i-star';
-    const sz = .8 + Math.random() * 2.8;
-    s.style.cssText = `
-      left:${Math.random()*100}%; top:${Math.random()*100}%;
-      width:${sz}px; height:${sz}px;
-      animation-duration:${1.4 + Math.random()*3}s;
-      animation-delay:${Math.random()*3}s;
-    `;
-    stars.appendChild(s);
-  }
-
-  let opened = false;
-
-  function openEnvelope() {
-    if (opened) return;
-    opened = true;
-
-    // stop floating, hide hint
-    envWrap.classList.add('clicked');
-    iHint.classList.add('off');
-
-    // 1 — open flap + break seal
-    requestAnimationFrame(() => {
-      envFlap.classList.add('open');
-      envSeal.classList.add('open');
-    });
-
-    // 2 — show names inside envelope
-    setTimeout(() => envInner.classList.add('show'), 600);
-
-    // 3 — fade whole overlay
-    setTimeout(() => {
-      intro.classList.add('hide');
-      document.body.classList.remove('intro-on');
-    }, 1550);
-
-    // 4 — remove from DOM
-    setTimeout(() => intro.remove(), 2600);
-  }
-
-  intro.addEventListener('click', openEnvelope);
-  // keyboard open (any key)
-  document.addEventListener('keydown', openEnvelope, { once: true });
-})();
 
 /* ─── CONFIG ──────────────────────────────────────── */
 const SCRIPT_URL = 'REEMPLAZAR_CON_URL_APPS_SCRIPT';
