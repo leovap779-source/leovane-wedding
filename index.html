@@ -922,6 +922,126 @@
       font-family: 'DM Sans', sans-serif; font-size: .73rem;
       letter-spacing: .14rem; color: rgba(167,176,138,.38); margin-top: .8rem;
     }
+    /* ── TEXTO CON FOTO (background-clip) ─────────── */
+    .tc-section {
+      background: var(--noche); overflow: hidden;
+      padding: clamp(3rem,8vh,6rem) 1.5rem;
+      display: flex; flex-direction: column; align-items: center; gap: 1.2rem;
+    }
+    .tc-eyebrow {
+      font-family: 'DM Sans', sans-serif; font-weight: 300;
+      font-size: .58rem; letter-spacing: .36rem; text-transform: uppercase;
+      color: rgba(167,176,138,.38);
+    }
+    .tc-text {
+      font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 300;
+      font-size: clamp(68px, 20vw, 230px);
+      line-height: .86; letter-spacing: -.015em; text-align: center;
+      background-image: url('images/2hero.webp.webp');
+      background-size: cover; background-position: center 22%;
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent; color: transparent;
+      display: block; user-select: none;
+    }
+    .tc-text em { font-style: italic; display: block; }
+    .tc-date {
+      font-family: 'DM Sans', sans-serif; font-weight: 300;
+      font-size: .6rem; letter-spacing: .38rem; text-transform: uppercase;
+      color: rgba(201,162,122,.35);
+    }
+
+    /* ── FILMSTRIP GALERÍA INFINITA ─────────────── */
+    .film-section { background: var(--noche); padding-bottom: 3rem; overflow: hidden; }
+    .film-head { text-align: center; padding: 5rem 2rem 3rem; }
+    .film-head .big-title { color: var(--lino); }
+    .film-head .eyebrow   { color: rgba(167,176,138,.6); }
+    .film-wrap { overflow: hidden; width: 100%; cursor: none; }
+    .film-track {
+      display: flex; gap: .55rem; align-items: stretch;
+      height: clamp(300px, 62vh, 620px);
+      width: max-content;
+      animation: filmroll 52s linear infinite;
+      will-change: transform;
+    }
+    .film-wrap:hover .film-track { animation-play-state: paused; }
+    @keyframes filmroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .film-item {
+      flex-shrink: 0; height: 100%; aspect-ratio: 4/5;
+      overflow: hidden; position: relative; border-radius: 2px;
+      background: var(--sage);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .film-item img {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; object-position: center top;
+      transition: transform .6s ease; display: block;
+    }
+    .film-item span {
+      position: relative; z-index: 1;
+      font-family: 'DM Sans', sans-serif; font-size: .55rem;
+      letter-spacing: .16rem; text-transform: uppercase; color: rgba(31,36,48,.28);
+    }
+    .film-item::after {
+      content: ''; position: absolute; inset: 0; z-index: 2;
+      background: rgba(31,36,48,0); transition: background .4s ease;
+    }
+    .film-wrap:hover .film-item:hover::after { background: rgba(31,36,48,.25); }
+    .film-wrap:hover .film-item:hover img { transform: scale(1.05); }
+    .film-footer {
+      display: flex; align-items: center; justify-content: center;
+      padding: 1.3rem 2rem;
+    }
+    .film-hint {
+      font-family: 'DM Sans', sans-serif; font-size: .54rem;
+      letter-spacing: .18rem; text-transform: uppercase;
+      color: rgba(231,228,218,.2);
+    }
+
+    /* ── TEXT TICKER ────────────────────────────── */
+    .text-ticker {
+      overflow: hidden;
+      border-top: 1px solid rgba(201,162,122,.13);
+      border-bottom: 1px solid rgba(201,162,122,.13);
+      padding: .88rem 0; background: var(--noche);
+    }
+    .text-ticker.on-lino {
+      background: var(--lino);
+      border-color: rgba(112,122,61,.14);
+    }
+    .tt-track {
+      display: flex; white-space: nowrap;
+      animation: ttscroll 26s linear infinite;
+      width: max-content;
+    }
+    .tt-track span {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 300; font-style: italic;
+      font-size: clamp(.88rem, 2.2vw, 1.2rem);
+      letter-spacing: .1em; color: rgba(201,162,122,.48);
+      padding: 0 2.6rem;
+    }
+    .text-ticker.on-lino .tt-track span { color: rgba(112,122,61,.4); }
+    @keyframes ttscroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ── LETTER-BY-LETTER REVEAL ────────────────── */
+    .split-text .ch {
+      display: inline-block;
+      opacity: 0; transform: translateY(30px);
+      transition: opacity .55s var(--ease), transform .55s var(--ease);
+      transition-delay: calc(var(--i, 0) * 0.038s);
+    }
+    .split-text .ch.sp { width: .28em; }
+    .split-text.on .ch { opacity: 1; transform: translateY(0); }
+
+    /* ── CURSOR PARALLAX layers ─────────────────── */
+    [data-depth] { will-change: transform; }
+
   </style>
 </head>
 <body>
@@ -990,12 +1110,12 @@
 
 <!-- ══ 1. HERO ══════════════════════════════════ -->
 <section id="hero">
-  <div class="hero-bg"></div>
-  <img class="hero-photo" src="images/2hero.webp.webp" alt="Leo & Vane" loading="eager">
-  <div class="hero-overlay"></div>
+  <div class="hero-bg" data-depth="0.18"></div>
+  <img class="hero-photo" data-depth="0.28" src="images/2hero.webp.webp" alt="Leo & Vane" loading="eager">
+  <div class="hero-overlay" data-depth="0.12"></div>
   <div class="hero-grain"></div>
-  <div class="particles" id="particles"></div>
-  <div class="hero-body">
+  <div class="particles" id="particles" data-depth="0.5"></div>
+  <div class="hero-body" data-depth="-0.1">
     <div class="hero-names">Leo <span class="amp">&amp;</span> Vane</div>
     <div class="hero-rule"></div>
     <div class="hero-date">17 · 10 · 2026</div>
@@ -1006,6 +1126,13 @@
     <div class="arrow-down"></div>
   </div>
 </section>
+
+<!-- ticker dark después del hero -->
+<div class="text-ticker" aria-hidden="true">
+  <div class="tt-track">
+    <span>Leo &amp; Vane</span><span>✦</span><span>17 · 10 · 2026</span><span>✦</span><span>Chihuahua, México</span><span>✦</span><span>Leo &amp; Vane</span><span>✦</span><span>17 · 10 · 2026</span><span>✦</span><span>Chihuahua, México</span><span>✦</span><span>Leo &amp; Vane</span><span>✦</span><span>17 · 10 · 2026</span><span>✦</span><span>Chihuahua, México</span><span>✦</span><span>Leo &amp; Vane</span><span>✦</span><span>17 · 10 · 2026</span><span>✦</span><span>Chihuahua, México</span><span>✦</span>
+  </div>
+</div>
 
 <!-- ══ 2. COUNTDOWN ════════════════════════════ -->
 <section id="countdown">
@@ -1033,6 +1160,20 @@
   </div>
   <span class="sep reveal">✦</span>
 </section>
+
+<!-- ══ TEXTO CON FOTO (background-clip) ═════════ -->
+<section class="tc-section">
+  <span class="tc-eyebrow reveal">Chihuahua · México · 2026</span>
+  <span class="tc-text reveal" aria-hidden="true">LEO<em>&amp;</em>VANE</span>
+  <span class="tc-date reveal">17 · 10 · 2026</span>
+</section>
+
+<!-- ticker light antes del itinerario -->
+<div class="text-ticker on-lino" aria-hidden="true">
+  <div class="tt-track">
+    <span>Con amor los esperamos</span><span>·</span><span>Con amor los esperamos</span><span>·</span><span>Con amor los esperamos</span><span>·</span><span>Con amor los esperamos</span><span>·</span><span>Con amor los esperamos</span><span>·</span><span>Con amor los esperamos</span><span>·</span><span>Con amor los esperamos</span><span>·</span><span>Con amor los esperamos</span><span>·</span>
+  </div>
+</div>
 
 <!-- ══ 3. ITINERARIO — TIMELINE ════════════════ -->
 <section id="itinerario">
@@ -1090,26 +1231,24 @@
   </div>
 </section>
 
-<!-- ══ 4. GALERÍA — SLIDER ══════════════════════ -->
-<section id="galeria">
-  <div class="gallery-head">
+<!-- ticker itinerario → galería -->
+<div class="text-ticker on-lino" aria-hidden="true">
+  <div class="tt-track">
+    <span>Ceremonia · 3:30 pm</span><span>·</span><span>Recepción · 8:30 pm</span><span>·</span><span>Cena · 9:00 pm</span><span>·</span><span>Vals · 10:00 pm</span><span>·</span><span>Fiesta · 10:30 pm</span><span>·</span><span>Ceremonia · 3:30 pm</span><span>·</span><span>Recepción · 8:30 pm</span><span>·</span><span>Cena · 9:00 pm</span><span>·</span><span>Vals · 10:00 pm</span><span>·</span><span>Fiesta · 10:30 pm</span><span>·</span>
+  </div>
+</div>
+
+<!-- ══ 4. GALERÍA — FILMSTRIP INFINITO ══════════ -->
+<section id="galeria" class="film-section">
+  <div class="film-head">
     <span class="eyebrow reveal">momentos</span>
     <h2 class="big-title reveal">NOSOTROS</h2>
   </div>
-
-  <div class="sl-wrap" id="slWrap">
-    <!-- slides generadas por JS -->
-    <button class="sl-arrow sl-prev" id="slPrev" aria-label="Anterior">‹</button>
-    <button class="sl-arrow sl-next" id="slNext" aria-label="Siguiente">›</button>
-    <div class="sl-progress-wrap">
-      <div class="sl-progress-bar" id="slBar"></div>
-    </div>
+  <div class="film-wrap">
+    <div class="film-track" id="filmTrack"></div>
   </div>
-
-  <div class="sl-footer">
-    <span class="sl-counter" id="slCounter"><em>01</em> / 15</span>
-    <div class="sl-dots" id="slDots"></div>
-    <span class="sl-click-hint">clic para ampliar</span>
+  <div class="film-footer">
+    <span class="film-hint">pasa el cursor para pausar · clic para ampliar</span>
   </div>
 </section>
 
@@ -1409,105 +1548,82 @@ function tick() {
 }
 tick(); setInterval(tick, 1000);
 
-/* ─── SLIDER GALERÍA (crossfade + Ken Burns) ─────── */
-const TOTAL      = 15;
-const SLIDE_RATIO = 4/5;   // 1080 × 1350 px (portrait)
-const SHADES     = ['#A7B08A','#98A47E','#B2BB98','#8E9A72','#A7B08A','#B8C0A4','#9DAA82','#AAB590'];
-const AUTOPLAY_MS = 4200;
+// color dinámico según días restantes
+(function updateCdColor() {
+  const days = Math.floor((TARGET - Date.now()) / 864e5);
+  const color = days > 300 ? '#707A3D'
+              : days > 100 ? '#C9A27A'
+              : days > 30  ? '#D4A853'
+              : '#E8C56A';
+  document.querySelectorAll('.cd-num').forEach(el => {
+    el.style.transition = 'color 2s ease';
+    el.style.color = color;
+  });
+})();
 
-/*
-  Fotos de galería — ajusta el número final y la extensión
-  si tus archivos se llaman diferente (ej: .jpg en vez de .webp).
-  Las fotos que no existan mostrarán un placeholder automáticamente.
-*/
+/* ─── CURSOR PARALLAX (hero 3D) ──────────────────── */
+(function() {
+  const hero = document.getElementById('hero');
+  const layers = hero.querySelectorAll('[data-depth]');
+  let active = false;
+  const heroR = () => hero.getBoundingClientRect();
+  let rect = heroR();
+  window.addEventListener('resize', () => { rect = heroR(); }, {passive:true});
+
+  document.addEventListener('mousemove', e => {
+    if (e.clientY > rect.bottom + 20) return;
+    active = true;
+    const cx = (e.clientX - rect.left - rect.width  / 2) / rect.width;
+    const cy = (e.clientY - rect.top  - rect.height / 2) / rect.height;
+    layers.forEach(el => {
+      const d = parseFloat(el.dataset.depth);
+      const x = cx * d * 38;
+      const y = cy * d * 28;
+      el.style.transform = `translate(${x}px,${y}px)`;
+    });
+  });
+  hero.addEventListener('mouseleave', () => {
+    layers.forEach(el => el.style.transform = '');
+  });
+})();
+
+/* ─── LETTER-BY-LETTER SPLIT ────────────────────── */
+(function() {
+  document.querySelectorAll('h2.big-title').forEach(el => {
+    if (el.dataset.split || el.querySelector('*')) return;
+    el.dataset.split = '1';
+    el.classList.add('split-text');
+    el.innerHTML = [...el.textContent].map((c, i) =>
+      c === ' '
+        ? `<span class="ch sp" style="--i:${i}"> </span>`
+        : `<span class="ch" style="--i:${i}">${c}</span>`
+    ).join('');
+  });
+})();
+
+/* ─── FILMSTRIP GALERÍA ──────────────────────────── */
+const TOTAL  = 15;
+const SHADES = ['#A7B08A','#98A47E','#B2BB98','#8E9A72','#A7B08A','#B8C0A4','#9DAA82','#AAB590'];
 const EXT    = 'jpg';
-const PHOTOS = Array.from({ length: 15 }, (_, i) =>
-  `Mesa de trabajo ${i + 1}.${EXT}`
-);
+const PHOTOS = Array.from({ length: TOTAL }, (_, i) => `Mesa de trabajo ${i + 1}.${EXT}`);
 
-const slWrap    = document.getElementById('slWrap');
-const slBar     = document.getElementById('slBar');
-const slCounter = document.getElementById('slCounter');
-const slDotsEl  = document.getElementById('slDots');
+const filmTrack = document.getElementById('filmTrack');
+// Duplicate set for seamless infinite loop
+[...PHOTOS, ...PHOTOS].forEach((photo, i) => {
+  const idx  = i % TOTAL;
+  const item = document.createElement('div');
+  item.className = 'film-item';
 
-let slIdx  = 0;
-let timer  = null;
-let progT  = null;
-let progStart = 0;
+  const img = document.createElement('img');
+  img.src     = `images/gallery/${encodeURIComponent(photo)}`;
+  img.alt     = `Leo & Vane — foto ${idx + 1}`;
+  img.loading = idx < 5 ? 'eager' : 'lazy';
+  img.onerror = () => { item.style.background = SHADES[idx % SHADES.length]; img.remove(); };
+  item.appendChild(img);
 
-// build slides
-const slides = [];
-for (let i = 0; i < TOTAL; i++) {
-  const s = document.createElement('div');
-  s.className = 'sl-slide' + (i===0?' active':'');
-
-  const ph = document.createElement('div'); ph.className = 'sl-ph';
-  const inn = document.createElement('div');
-  inn.className = 'sl-ph-inner';
-  inn.style.background = SHADES[i % SHADES.length];
-
-  if (PHOTOS[i]) {
-    const img = document.createElement('img');
-    // encodeURIComponent maneja espacios y caracteres especiales en el nombre
-    img.src = `images/gallery/${encodeURIComponent(PHOTOS[i])}`;
-    img.alt = `Leo & Vane — foto ${i+1}`;
-    img.loading = i < 3 ? 'eager' : 'lazy';
-    img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;';
-    img.onerror = () => { inn.style.background = SHADES[i % SHADES.length]; img.remove(); };
-    inn.appendChild(img);
-  } else {
-    const lbl = document.createElement('span');
-    lbl.textContent = `foto ${i+1}`;
-    inn.appendChild(lbl);
-  }
-
-  ph.appendChild(inn); s.appendChild(ph);
-  s.addEventListener('click', () => openLb(i));
-  slWrap.insertBefore(s, document.getElementById('slPrev'));
-  slides.push(s);
-
-  // dot
-  const dot = document.createElement('div'); dot.className = 'sl-dot'+(i===0?' active':'');
-  dot.addEventListener('click', () => goTo(i));
-  slDotsEl.appendChild(dot);
-}
-
-function goTo(idx, restart=true) {
-  slides[slIdx].classList.remove('active');
-  slDotsEl.children[slIdx].classList.remove('active');
-  slIdx = (idx + TOTAL) % TOTAL;
-  slides[slIdx].classList.add('active');
-  slDotsEl.children[slIdx].classList.add('active');
-  slCounter.innerHTML = `<em>${pad(slIdx+1)}</em> / ${pad(TOTAL)}`;
-  if (restart) startProgress();
-}
-
-function startProgress() {
-  clearInterval(timer); cancelAnimationFrame(progT);
-  progStart = performance.now();
-  slBar.style.transition = 'none'; slBar.style.width = '0%';
-  void slBar.offsetWidth;
-  slBar.style.transition = `width ${AUTOPLAY_MS}ms linear`;
-  slBar.style.width = '100%';
-  timer = setTimeout(() => goTo(slIdx + 1), AUTOPLAY_MS);
-}
-
-document.getElementById('slPrev').addEventListener('click', () => goTo(slIdx - 1));
-document.getElementById('slNext').addEventListener('click', () => goTo(slIdx + 1));
-
-// pause on hover
-slWrap.addEventListener('mouseenter', () => { clearTimeout(timer); cancelAnimationFrame(progT); slBar.style.transition='none'; });
-slWrap.addEventListener('mouseleave', () => startProgress());
-
-// touch swipe
-let touchX = 0;
-slWrap.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, {passive:true});
-slWrap.addEventListener('touchend',   e => {
-  const dx = e.changedTouches[0].clientX - touchX;
-  if (Math.abs(dx) > 40) goTo(dx < 0 ? slIdx+1 : slIdx-1);
+  if (i < TOTAL) item.addEventListener('click', () => openLb(idx));
+  filmTrack.appendChild(item);
 });
-
-startProgress();
 
 /* ─── LIGHTBOX ───────────────────────────────────── */
 let lbIdx = 0;
@@ -1521,9 +1637,20 @@ function openLb(i) {
 }
 function closeLb() { lb.classList.remove('open'); document.body.style.overflow=''; }
 function refreshLb() {
-  lbBox.style.aspectRatio = RATIOS[lbIdx];
-  lbBox.style.width = '560px';
-  lbBox.innerHTML = `<span>foto ${lbIdx+1}</span>`;
+  lbBox.style.aspectRatio = '4/5';
+  lbBox.style.width = 'min(560px, 88vw)';
+  // show real image if available
+  const photo = PHOTOS[lbIdx];
+  if (photo) {
+    lbBox.innerHTML = '';
+    const img = document.createElement('img');
+    img.src = `images/gallery/${encodeURIComponent(photo)}`;
+    img.style.cssText = 'width:100%;height:100%;object-fit:cover;object-position:center top;border-radius:2px;';
+    img.onerror = () => { lbBox.innerHTML = `<span>foto ${lbIdx+1}</span>`; };
+    lbBox.appendChild(img);
+  } else {
+    lbBox.innerHTML = `<span>foto ${lbIdx+1}</span>`;
+  }
   lbCount.textContent = `${lbIdx+1} / ${TOTAL}`;
 }
 function moveLb(dir) { lbIdx = (lbIdx+dir+TOTAL)%TOTAL; refreshLb(); }
