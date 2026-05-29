@@ -659,7 +659,7 @@
     .par-section {
       position: relative; height: 92vh; min-height: 500px;
       overflow: hidden;
-      display: flex; align-items: center; justify-content: flex-end;
+      display: flex; align-items: center; justify-content: flex-start;
     }
     .par-bg {
       position: absolute; inset: -18%;
@@ -697,10 +697,10 @@
     }
     .par-content {
       position: relative; z-index: 5;
-      text-align: right;
-      padding: 2rem clamp(2.5rem,9vw,8rem);
-      display: flex; flex-direction: column; align-items: flex-end; gap: 1.5rem;
-      max-width: min(640px, 90vw);
+      text-align: left;
+      padding: 2rem clamp(2rem,8vw,7rem);
+      display: flex; flex-direction: column; align-items: flex-start; gap: 1.5rem;
+      max-width: min(640px, 92vw);
     }
     .par-eyebrow {
       font-family: 'DM Sans', sans-serif; font-weight: 300;
@@ -1181,14 +1181,14 @@
 
     /* ══ MOBILE FIRST — RESPONSIVE ════════════════ */
     @media (max-width: 768px) {
-      /* hero */
-      #hero { justify-content: center; }
-      .hero-body { text-align: center; padding: 1.5rem; max-width: 100%; }
-      .hero-names { justify-content: center; }
-      .hero-rule  { margin: 1.5rem auto; }
-      /* parallax */
-      .par-section { justify-content: center; }
-      .par-content { text-align: center; align-items: center; padding: 2rem 1.5rem; max-width: 92vw; }
+      /* hero — siempre izquierda */
+      #hero { justify-content: flex-start; }
+      .hero-body { text-align: left; padding: 1.5rem; max-width: 100%; }
+      .hero-names { justify-content: flex-start; }
+      .hero-rule  { margin: 1.5rem 0; }
+      /* parallax — siempre izquierda */
+      .par-section { justify-content: flex-start; }
+      .par-content { text-align: left; align-items: flex-start; padding: 2rem 1.5rem; max-width: 94vw; }
       .par-quote   { font-size: clamp(1.3rem, 5vw, 2.2rem); }
       /* tc */
       .tc-text { font-size: clamp(48px, 16vw, 120px); }
@@ -1283,10 +1283,6 @@
     <div class="hero-rule"></div>
     <div class="hero-date">17 · 10 · 2026</div>
     <div class="hero-city">Chihuahua, México</div>
-  </div>
-  <div class="hero-scroll">
-    <span>scroll</span>
-    <div class="arrow-down"></div>
   </div>
 </section>
 
@@ -1428,12 +1424,7 @@
   Ejemplo: src="images/gallery/tu-foto.webp"
 -->
 <section class="par-section" id="par1">
-  <div class="par-bg" id="par1bg">
-    <picture>
-      <source media="(max-width: 768px)" srcset="images/frase%20movil.jpg">
-      <img src="images/frase.jpg" alt="" aria-hidden="true" loading="lazy">
-    </picture>
-  </div>
+  <div class="par-bg" id="par1bg"></div>
   <div class="par-grain"></div>
   <div class="par-overlay"></div>
   <div class="par-content">
@@ -1727,6 +1718,20 @@ tick(); setInterval(tick, 1000);
     el.style.transition = 'color 2s ease';
     el.style.color = color;
   });
+})();
+
+/* ─── PARALLAX BG — mobile/desktop swap ─────────── */
+(function() {
+  const bg  = document.getElementById('par1bg');
+  const mq  = window.matchMedia('(max-width: 768px)');
+  function apply() {
+    const url = mq.matches ? "url('images/frase%20movil.jpg')" : "url('images/frase.jpg')";
+    bg.style.backgroundImage    = url;
+    bg.style.backgroundSize     = 'cover';
+    bg.style.backgroundPosition = 'center 30%';
+  }
+  apply();
+  mq.addEventListener('change', apply);
 })();
 
 /* ─── TC SECTION REVEAL ─────────────────────────── */
