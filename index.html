@@ -1047,6 +1047,19 @@
     .split-text .ch.sp { width: .28em; }
     .split-text.on .ch { opacity: 1; transform: translateY(0); }
 
+    /* hero <picture> wrapper */
+    #hero picture {
+      position: absolute; inset: 0; z-index: 0;
+      display: block; width: 100%; height: 100%;
+    }
+    /* par-bg cuando usa <img> en lugar de background */
+    .par-bg { overflow: hidden; }
+    .par-bg img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center 30%;
+      display: block; pointer-events: none;
+    }
+
     /* ── CURSOR PARALLAX layers ─────────────────── */
     [data-depth] { will-change: transform; }
 
@@ -1240,7 +1253,10 @@
 <!-- ══ 1. HERO ══════════════════════════════════ -->
 <section id="hero">
   <div class="hero-bg" data-depth="0.18"></div>
-  <img class="hero-photo" data-depth="0.28" src="images/hero 3.jpg" alt="Leo & Vane" loading="eager">
+  <picture data-depth="0.28">
+    <source media="(max-width: 768px)" srcset="images/hero movil.jpg">
+    <img class="hero-photo" src="images/hero 3.jpg" alt="Leo & Vane" loading="eager">
+  </picture>
   <div class="hero-overlay" data-depth="0.12"></div>
   <div class="hero-grain"></div>
   <div class="particles" id="particles" data-depth="0.5"></div>
@@ -1398,7 +1414,12 @@
   Ejemplo: src="images/gallery/tu-foto.webp"
 -->
 <section class="par-section" id="par1">
-  <div class="par-bg" id="par1bg" style="background-image:url('images/frase.jpg')"></div>
+  <div class="par-bg" id="par1bg">
+    <picture>
+      <source media="(max-width: 768px)" srcset="images/frase movil.jpg">
+      <img src="images/frase.jpg" alt="" aria-hidden="true" loading="lazy">
+    </picture>
+  </div>
   <div class="par-grain"></div>
   <div class="par-overlay"></div>
   <div class="par-content">
@@ -1802,7 +1823,7 @@ const PHOTOS_SHUFFLED = shuffle(PHOTOS);
   img.src     = `images/gallery/${encodeURIComponent(photo)}`;
   img.alt     = `Leo & Vane`;
   img.loading = i < 6 ? 'eager' : 'lazy';
-  img.onerror = () => { item.style.background = SHADES[idx % SHADES.length]; img.remove(); };
+  img.onerror = () => { item.style.display = 'none'; };
   item.appendChild(img);
 
   if (i < TOTAL) item.addEventListener('click', () => openLb(idx));
