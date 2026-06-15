@@ -660,13 +660,11 @@
     .par-section {
       position: relative; height: 92vh; min-height: 500px;
       overflow: hidden;
-      display: flex; align-items: center; justify-content: flex-start;
+      display: flex; align-items: center; justify-content: flex-end;
     }
     .par-bg {
-      position: absolute; inset: -18%;
+      position: absolute; inset: 0;
       background-size: cover; background-position: center 30%;
-      will-change: transform;
-      transform: scale(1.2);
     }
     /* textura grain editorial sobre la foto */
     .par-grain {
@@ -698,9 +696,9 @@
     }
     .par-content {
       position: relative; z-index: 5;
-      text-align: left;
+      text-align: right;
       padding: 2rem clamp(2rem,8vw,7rem);
-      display: flex; flex-direction: column; align-items: flex-start; gap: 1.5rem;
+      display: flex; flex-direction: column; align-items: flex-end; gap: 1.5rem;
       max-width: min(640px, 92vw);
     }
     .par-eyebrow {
@@ -1198,9 +1196,9 @@
       .hero-body { text-align: left; padding: 1.5rem; max-width: 100%; }
       .hero-names { justify-content: flex-start; }
       .hero-rule  { margin: 1.5rem 0; }
-      /* parallax — izquierda + cuadrado 1:1 en móvil (1080×1080) */
-      .par-section { justify-content: flex-start; height: auto; aspect-ratio: 1/1; min-height: unset; }
-      .par-content { text-align: left; align-items: flex-start; padding: 2rem 1.5rem; max-width: 94vw; }
+      /* parallax — derecha + cuadrado 1:1 en móvil (1080×1080) */
+      .par-section { justify-content: flex-end; height: auto; aspect-ratio: 1/1; min-height: unset; }
+      .par-content { text-align: right; align-items: flex-end; padding: 2rem 1.5rem; max-width: 94vw; }
       .par-quote   { font-size: clamp(1.3rem, 5.5vw, 2.2rem); }
       .par-quote   { font-size: clamp(1.3rem, 5vw, 2.2rem); }
       /* tc */
@@ -1289,9 +1287,9 @@
     .rsvp-intro {
       font-family: 'Cormorant Garamond', Georgia, serif;
       font-weight: 300; font-style: italic;
-      font-size: clamp(1.5rem, 4.5vw, 2.6rem);
+      font-size: clamp(2rem, 6vw, 4rem);
       color: var(--noche); text-align: center;
-      max-width: 480px; line-height: 1.35;
+      max-width: 600px; line-height: 1.25;
       margin-bottom: .8rem;
     }
 
@@ -1493,12 +1491,6 @@
   <p class="tl-footer-note reveal">"Cada instante de este día ha sido pensado para compartirlo con ustedes. Su puntualidad hará que podamos disfrutarlo juntos."</p>
 </section>
 
-<!-- ticker itinerario → parallax -->
-<div class="text-ticker on-lino" aria-hidden="true">
-  <div class="tt-track">
-    <span>Ceremonia · 3:30 pm</span><span>·</span><span>Recepción · 8:30 pm</span><span>·</span><span>Cena · 9:00 pm</span><span>·</span><span>Vals · 10:00 pm</span><span>·</span><span>Fiesta · 10:30 pm</span><span>·</span><span>Ceremonia · 3:30 pm</span><span>·</span><span>Recepción · 8:30 pm</span><span>·</span><span>Cena · 9:00 pm</span><span>·</span><span>Vals · 10:00 pm</span><span>·</span><span>Fiesta · 10:30 pm</span><span>·</span>
-  </div>
-</div>
 
 <!-- ══ PARALLAX INTERLUDE ════════════════════════ -->
 <!--
@@ -1518,7 +1510,6 @@
       "Aquí comienza nuestro<br>'felices para siempre'"
     </p>
     <div class="par-rule reveal"><span>✦</span></div>
-    <p class="par-names reveal">Leo <span class="amp">&amp;</span> Vane</p>
   </div>
 </section>
 
@@ -1694,21 +1685,6 @@ window.addEventListener('scroll', () => {
   scrollBar.style.width = pct + '%';
 }, { passive: true });
 
-/* ─── PARALLAX ───────────────────────────────────── */
-const parSections = document.querySelectorAll('.par-section');
-function runParallax() {
-  parSections.forEach(sec => {
-    const bg = sec.querySelector('.par-bg');
-    if (!bg) return;
-    const rect = sec.getBoundingClientRect();
-    if (rect.bottom < 0 || rect.top > window.innerHeight) return;
-    const speed = 0.38;
-    const mid   = rect.top + rect.height / 2 - window.innerHeight / 2;
-    bg.style.transform = `translateY(${mid * speed}px) scale(1.22)`;
-  });
-}
-window.addEventListener('scroll', runParallax, { passive: true });
-runParallax();
 
 
 /* ─── CONFIG ──────────────────────────────────────── */
