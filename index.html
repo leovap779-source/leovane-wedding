@@ -995,8 +995,8 @@
 <nav id="sec-nav" aria-hidden="true">
   <div class="sn active" data-sec="hero"></div>
   <div class="sn" data-sec="countdown"></div>
-  <div class="sn" data-sec="galeria"></div>
   <div class="sn" data-sec="oracion"></div>
+  <div class="sn" data-sec="galeria"></div>
   <div class="sn" data-sec="itinerario"></div>
   <div class="sn" data-sec="dresscode"></div>
   <div class="sn" data-sec="regalos"></div>
@@ -1036,7 +1036,6 @@
     </div>
     <div class="hero-rule"></div>
     <div class="hero-date">17 · 10 · 2026</div>
-    <div class="hero-city">Catedral · Punto Lua</div>
   </div>
 </section>
 
@@ -1068,9 +1067,22 @@
   <span class="sep reveal">✦</span>
 </section>
 
+<!-- ══ 3. ORACIÓN ══════════════════════════════ -->
+<section id="oracion">
+  <div class="oracion-border reveal">
+    <span class="oracion-glyph">✦</span>
+    <p class="oracion-text">
+      Dios escribió nuestra historia de una manera perfecta y hoy, con gratitud y felicidad, celebramos el regalo de habernos encontrado.
+    </p>
+    <div class="oracion-rule"></div>
+    <p class="oracion-text">
+      Con su bendición, comenzamos una nueva aventura juntos y nos encantaría compartir este día tan especial con ustedes.
+    </p>
+    <span class="oracion-glyph">✦</span>
+  </div>
+</section>
 
-
-<!-- ══ 3. GALERÍA — FILMSTRIP INFINITO ══════════ -->
+<!-- ══ 4. GALERÍA — FILMSTRIP INFINITO ══════════ -->
 <section id="galeria" class="film-section">
   <div class="film-head">
     <span class="eyebrow reveal">Nuestros momentos</span>
@@ -1088,24 +1100,9 @@
   </div>
 </section>
 
-<!-- ══ 4. ORACIÓN ══════════════════════════════ -->
-<section id="oracion">
-  <div class="oracion-border reveal">
-    <span class="oracion-glyph">✦</span>
-    <p class="oracion-text">
-      Dios escribió nuestra historia de una manera perfecta y hoy, con gratitud y felicidad, celebramos el regalo de habernos encontrado.
-    </p>
-    <div class="oracion-rule"></div>
-    <p class="oracion-text">
-      Con su bendición, comenzamos una nueva aventura juntos y nos encantaría compartir este día tan especial con ustedes.
-    </p>
-    <span class="oracion-glyph">✦</span>
-  </div>
-</section>
-
 <!-- ══ 5. ITINERARIO — TIMELINE ════════════════ -->
 <section id="itinerario">
-  <span class="eyebrow reveal">el programa</span>
+  <span class="eyebrow reveal">PROGRAMA</span>
   <h2 class="big-title reveal" style="text-align:center; margin-bottom:.6rem;">ASÍ VIVIREMOS<br>ESTE DÍA</h2>
   <p class="sub reveal" style="text-align:center; margin-bottom:4rem;">Cinco momentos, una celebración</p>
 
@@ -1162,7 +1159,7 @@
     </div>
 
   </div>
-  <p class="tl-footer-note reveal">"Cada instante de este día ha sido pensado para compartirlo con ustedes. Su puntualidad hará que podamos disfrutarlo juntos."</p>
+  <p class="tl-footer-note reveal">Cada instante de este día ha sido pensado para compartirlo con ustedes. Su puntualidad hará que podamos disfrutarlo juntos.</p>
 </section>
 
 
@@ -1226,7 +1223,6 @@
   <p class="dc-avoid reveal">Evitar blanco y rojo</p>
   <p class="dc-palette-title reveal">Inspiración de colores</p>
   <div class="swatches reveal">
-    <div class="swatch"><div class="sw-circle" style="background:#EDE7DC;"></div><span class="sw-name">Arena</span></div>
     <div class="swatch"><div class="sw-circle" style="background:#D4C4A8;"></div><span class="sw-name">Beige</span></div>
     <div class="swatch"><div class="sw-circle" style="background:#B2A898;"></div><span class="sw-name">Taupe</span></div>
     <div class="swatch"><div class="sw-circle" style="background:#8BA07A;"></div><span class="sw-name">Verde Sage</span></div>
@@ -1297,7 +1293,6 @@
         <label class="r-opt"><input type="radio" name="asistencia" value="Ceremonia religiosa"><span>Ceremonia religiosa</span></label>
         <label class="r-opt"><input type="radio" name="asistencia" value="Celebración"><span>Celebración</span></label>
         <label class="r-opt"><input type="radio" name="asistencia" value="Ambos eventos"><span>Ambos eventos</span></label>
-        <label class="r-opt"><input type="radio" name="asistencia" value="No podré asistir"><span>No podré asistir</span></label>
       </div>
     </div>
     <button type="submit" class="f-submit" id="rsvpBtn">Confirmar asistencia</button>
@@ -1416,7 +1411,7 @@ const io = new IntersectionObserver(entries => {
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
 /* ─── FLOATING NAV DOTS (section tracking) ───────── */
-const SECS = ['hero','countdown','galeria','oracion','itinerario','dresscode','regalos','rsvp'];
+const SECS = ['hero','countdown','oracion','galeria','itinerario','dresscode','regalos','rsvp'];
 const dots = document.querySelectorAll('.sn');
 const navIO = new IntersectionObserver(entries => {
   entries.forEach(en => {
