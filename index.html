@@ -1233,12 +1233,76 @@
       .tc-text    { font-size: clamp(40px, 14vw, 80px); }
       .par-quote  { font-size: clamp(1.2rem, 5.5vw, 2rem); }
       .film-track { height: 190px; }
-      /* Fix: small screens countdown wraps */
       .cd-grid    { gap: .35rem; }
       .cd-num     { font-size: clamp(38px, 10vw, 70px); min-width: clamp(46px, 12vw, 85px); }
       .cd-dot     { font-size: clamp(38px, 10vw, 70px); }
-      /* Envelope smaller */
       .env-seal   { width: clamp(36px, 10vw, 50px); height: clamp(36px, 10vw, 50px); }
+    }
+
+    /* ══ ORACIÓN RELIGIOSA ═══════════════════════════ */
+    #oracion {
+      background: var(--lino);
+      padding: 4.5rem 2rem;
+      display: flex; flex-direction: column;
+      align-items: center; text-align: center;
+    }
+    .oracion-border {
+      border-top: 1px solid rgba(201,162,122,.28);
+      border-bottom: 1px solid rgba(201,162,122,.28);
+      padding: 2.8rem 1.5rem;
+      max-width: 620px; width: 100%;
+      display: flex; flex-direction: column;
+      align-items: center; gap: 1.5rem;
+    }
+    .oracion-glyph {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.1rem; color: var(--caramelo); letter-spacing: .4rem;
+    }
+    .oracion-text {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 300; font-style: italic;
+      font-size: clamp(1.05rem, 2.8vw, 1.5rem);
+      color: var(--noche); line-height: 1.9;
+      max-width: 540px;
+    }
+    .oracion-rule {
+      width: 38px; height: 1px;
+      background: rgba(201,162,122,.4);
+    }
+
+    /* ══ DRESSCODE — paleta y nota niños ════════════ */
+    .dc-palette-title {
+      font-family: 'DM Sans', sans-serif; font-weight: 300;
+      font-size: .62rem; letter-spacing: .32rem; text-transform: uppercase;
+      color: var(--olivo); margin-bottom: .4rem; margin-top: 1.5rem;
+    }
+    .dc-kids {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 300; font-style: italic;
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      color: var(--noche); opacity: .75;
+      max-width: 420px; line-height: 1.95;
+      margin-top: 1.5rem; text-align: center;
+    }
+
+    /* ══ RSVP — intro phrase ════════════════════════ */
+    .rsvp-intro {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 300; font-style: italic;
+      font-size: clamp(1.5rem, 4.5vw, 2.6rem);
+      color: var(--noche); text-align: center;
+      max-width: 480px; line-height: 1.35;
+      margin-bottom: .8rem;
+    }
+
+    /* ══ ITINERARY — nota de cierre ═════════════════ */
+    .tl-footer-note {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 300; font-style: italic;
+      font-size: clamp(.95rem, 2.2vw, 1.15rem);
+      color: var(--noche); opacity: .62;
+      text-align: center; max-width: 480px;
+      margin: 2.5rem auto 0; line-height: 1.85;
     }
 
   </style>
@@ -1259,8 +1323,9 @@
 <nav id="sec-nav" aria-hidden="true">
   <div class="sn active" data-sec="hero"></div>
   <div class="sn" data-sec="countdown"></div>
-  <div class="sn" data-sec="itinerario"></div>
   <div class="sn" data-sec="galeria"></div>
+  <div class="sn" data-sec="oracion"></div>
+  <div class="sn" data-sec="itinerario"></div>
   <div class="sn" data-sec="dresscode"></div>
   <div class="sn" data-sec="regalos"></div>
   <div class="sn" data-sec="rsvp"></div>
@@ -1281,8 +1346,8 @@
 <section id="hero">
   <div class="hero-bg" data-depth="0.18"></div>
   <picture data-depth="0.28">
-    <source media="(max-width: 768px)" srcset="images/hero%20movil.jpg">
-    <img class="hero-photo" src="images/hero%203.jpg" alt="Leo & Vane" loading="eager">
+    <source media="(max-width: 768px)" srcset="images/hero%202%20movil.webp">
+    <img class="hero-photo" src="images/hero%202%20web.webp" alt="Leo & Vane" loading="eager">
   </picture>
   <div class="hero-overlay" data-depth="0.12"></div>
   <div class="hero-grain"></div>
@@ -1299,16 +1364,10 @@
     </div>
     <div class="hero-rule"></div>
     <div class="hero-date">17 · 10 · 2026</div>
-    <div class="hero-city">Chihuahua, México</div>
+    <div class="hero-city">Catedral · Punto Lua</div>
   </div>
 </section>
 
-<!-- ticker claro después del hero -->
-<div class="text-ticker on-lino" aria-hidden="true">
-  <div class="tt-track">
-    <span>Leo &amp; Vane</span><span>✦</span><span>17 · 10 · 2026</span><span>✦</span><span>Chihuahua, México</span><span>✦</span><span>Leo &amp; Vane</span><span>✦</span><span>17 · 10 · 2026</span><span>✦</span><span>Chihuahua, México</span><span>✦</span><span>Leo &amp; Vane</span><span>✦</span><span>17 · 10 · 2026</span><span>✦</span><span>Chihuahua, México</span><span>✦</span><span>Leo &amp; Vane</span><span>✦</span><span>17 · 10 · 2026</span><span>✦</span><span>Chihuahua, México</span><span>✦</span>
-  </div>
-</div>
 
 <!-- ══ 2. COUNTDOWN ════════════════════════════ -->
 <section id="countdown">
@@ -1337,24 +1396,45 @@
   <span class="sep reveal">✦</span>
 </section>
 
-<!-- ══ TEXTO CON FOTO (background-clip) ═════════ -->
-<section class="tc-section">
-  <span class="tc-eyebrow reveal">Chihuahua · México · 2026</span>
-  <span class="tc-text reveal" aria-hidden="true">LEO<em>&amp;</em>VANE</span>
-  <span class="tc-date reveal">17 · 10 · 2026</span>
+
+
+<!-- ══ 3. GALERÍA — FILMSTRIP INFINITO ══════════ -->
+<section id="galeria" class="film-section">
+  <div class="film-head">
+    <span class="eyebrow reveal">Nuestros momentos</span>
+    <h2 class="big-title reveal" style="font-size:clamp(28px,6.5vw,72px);line-height:1.05;">ACOMPÁÑANOS EN<br>NUESTRA HISTORIA</h2>
+  </div>
+  <div class="film-wrap">
+    <div class="film-track" id="filmTrack"></div>
+  </div>
+  <div class="film-gap"></div>
+  <div class="film-wrap film-wrap-r">
+    <div class="film-track film-track-r" id="filmTrackR"></div>
+  </div>
+  <div class="film-footer">
+    <span class="film-hint">pasa el cursor para pausar · clic para ampliar</span>
+  </div>
 </section>
 
-<!-- ticker light antes del itinerario -->
-<div class="text-ticker on-lino" aria-hidden="true">
-  <div class="tt-track">
-    <span>Con amor los esperamos</span><span>·</span><span>Con amor los esperamos</span><span>·</span><span>Con amor los esperamos</span><span>·</span><span>Con amor los esperamos</span><span>·</span><span>Con amor los esperamos</span><span>·</span><span>Con amor los esperamos</span><span>·</span><span>Con amor los esperamos</span><span>·</span><span>Con amor los esperamos</span><span>·</span>
+<!-- ══ 4. ORACIÓN ══════════════════════════════ -->
+<section id="oracion">
+  <div class="oracion-border reveal">
+    <span class="oracion-glyph">✦</span>
+    <p class="oracion-text">
+      Dios escribió nuestra historia de una manera perfecta y hoy, con gratitud y felicidad, celebramos el regalo de habernos encontrado.
+    </p>
+    <div class="oracion-rule"></div>
+    <p class="oracion-text">
+      Con su bendición, comenzamos una nueva aventura juntos y nos encantaría compartir este día tan especial con ustedes.
+    </p>
+    <span class="oracion-glyph">✦</span>
   </div>
-</div>
+</section>
 
-<!-- ══ 3. ITINERARIO — TIMELINE ════════════════ -->
+<!-- ══ 5. ITINERARIO — TIMELINE ════════════════ -->
 <section id="itinerario">
   <span class="eyebrow reveal">el programa</span>
-  <h2 class="big-title reveal" style="text-align:center; margin-bottom:.6rem;">EL DÍA</h2>
+  <h2 class="big-title reveal" style="text-align:center; margin-bottom:.6rem;">ASÍ VIVIREMOS<br>ESTE DÍA</h2>
   <p class="sub reveal" style="text-align:center; margin-bottom:4rem;">Cinco momentos, una celebración</p>
 
   <div class="timeline">
@@ -1410,32 +1490,15 @@
     </div>
 
   </div>
+  <p class="tl-footer-note reveal">"Cada instante de este día ha sido pensado para compartirlo con ustedes. Su puntualidad hará que podamos disfrutarlo juntos."</p>
 </section>
 
-<!-- ticker itinerario → galería -->
+<!-- ticker itinerario → parallax -->
 <div class="text-ticker on-lino" aria-hidden="true">
   <div class="tt-track">
     <span>Ceremonia · 3:30 pm</span><span>·</span><span>Recepción · 8:30 pm</span><span>·</span><span>Cena · 9:00 pm</span><span>·</span><span>Vals · 10:00 pm</span><span>·</span><span>Fiesta · 10:30 pm</span><span>·</span><span>Ceremonia · 3:30 pm</span><span>·</span><span>Recepción · 8:30 pm</span><span>·</span><span>Cena · 9:00 pm</span><span>·</span><span>Vals · 10:00 pm</span><span>·</span><span>Fiesta · 10:30 pm</span><span>·</span>
   </div>
 </div>
-
-<!-- ══ 4. GALERÍA — FILMSTRIP INFINITO ══════════ -->
-<section id="galeria" class="film-section">
-  <div class="film-head">
-    <span class="eyebrow reveal">Nuestros momentos</span>
-    <h2 class="big-title reveal" style="font-size:clamp(28px,6.5vw,72px);line-height:1.05;">ACOMPÁÑANOS EN<br>NUESTRA HISTORIA</h2>
-  </div>
-  <div class="film-wrap">
-    <div class="film-track" id="filmTrack"></div>
-  </div>
-  <div class="film-gap"></div>
-  <div class="film-wrap film-wrap-r">
-    <div class="film-track film-track-r" id="filmTrackR"></div>
-  </div>
-  <div class="film-footer">
-    <span class="film-hint">pasa el cursor para pausar · clic para ampliar</span>
-  </div>
-</section>
 
 <!-- ══ PARALLAX INTERLUDE ════════════════════════ -->
 <!--
@@ -1494,11 +1557,23 @@
     </div>
   </div>
 
-  <p class="dc-desc reveal">
-    Queremos que te veas increíble. Elige atuendos elegantes y sofisticados para la ocasión.
-  </p>
   <span class="sep reveal">✦</span>
   <p class="dc-avoid reveal">Evitar blanco y rojo</p>
+  <p class="dc-palette-title reveal">Inspiración de colores</p>
+  <div class="swatches reveal">
+    <div class="swatch"><div class="sw-circle" style="background:#EDE7DC;"></div><span class="sw-name">Arena</span></div>
+    <div class="swatch"><div class="sw-circle" style="background:#D4C4A8;"></div><span class="sw-name">Beige</span></div>
+    <div class="swatch"><div class="sw-circle" style="background:#B2A898;"></div><span class="sw-name">Taupe</span></div>
+    <div class="swatch"><div class="sw-circle" style="background:#8BA07A;"></div><span class="sw-name">Verde Sage</span></div>
+    <div class="swatch"><div class="sw-circle" style="background:#566B3A;"></div><span class="sw-name">Verde Olivo</span></div>
+    <div class="swatch"><div class="sw-circle" style="background:#C4642A;"></div><span class="sw-name">Terracota</span></div>
+    <div class="swatch"><div class="sw-circle" style="background:#7A4A30;"></div><span class="sw-name">Chocolate</span></div>
+    <div class="swatch"><div class="sw-circle" style="background:#6B1F22;"></div><span class="sw-name">Vino</span></div>
+  </div>
+  <p class="dc-kids reveal">
+    Aunque amamos a los más pequeños, en esta ocasión hemos decidido<br>celebrar en compañía exclusiva de adultos.<br><br>
+    Gracias por su comprensión.
+  </p>
 </section>
 
 <!-- ══ 6. MESA DE REGALOS ═══════════════════════ -->
@@ -1516,10 +1591,9 @@
       <div class="gift-name">Transferencia</div>
       <div class="bank-table">
         <div class="bank-row"><span class="bank-key">Banco</span><span class="bank-val">BBVA</span></div>
-        <div class="bank-row"><span class="bank-key">Titular</span><span class="bank-val">Leonardo García</span></div>
-        <div class="bank-row"><span class="bank-key">CLABE</span><span class="bank-val bank-clabe">012 345 678 901 234 567</span></div>
+        <div class="bank-row"><span class="bank-key">Titular</span><span class="bank-val">Brayan Leonel Valenzuela Pérez</span></div>
+        <div class="bank-row"><span class="bank-key">CLABE</span><span class="bank-val bank-clabe">012 180 01562555854 2</span></div>
       </div>
-      <p class="gift-note">Datos de ejemplo — se actualizarán pronto</p>
     </div>
   </div>
 </section>
@@ -1545,20 +1619,20 @@
   ╚══════════════════════════════════════════════════════╝
 -->
 <section id="rsvp">
-  <span class="eyebrow reveal">queremos verte ahí</span>
-  <h2 class="big-title reveal" style="text-align:center; margin-bottom:.6rem;">¿NOS<br>ACOMPAÑAS?</h2>
-  <p class="rsvp-deadline reveal">Confírmanos tu asistencia antes del 1 de septiembre de 2026</p>
+  <p class="rsvp-intro reveal">Nos encantará compartir este momento contigo.</p>
+  <p class="rsvp-deadline reveal">Por favor confirma tu asistencia antes del 1 de septiembre de 2026</p>
   <form class="rsvp-form reveal" id="rsvpForm" novalidate>
     <div class="f-group">
       <label class="f-label" for="nombre">Nombre completo</label>
       <input class="f-input" type="text" id="nombre" name="nombre" required placeholder="Tu nombre completo">
     </div>
     <div class="f-group">
-      <label class="f-label">¿A qué asistes?</label>
+      <label class="f-label">¿Cómo nos acompañas?</label>
       <div class="radio-group" id="radioGroup">
         <label class="r-opt"><input type="radio" name="asistencia" value="Ceremonia religiosa"><span>Ceremonia religiosa</span></label>
-        <label class="r-opt"><input type="radio" name="asistencia" value="Recepción y fiesta"><span>Recepción y fiesta</span></label>
-        <label class="r-opt"><input type="radio" name="asistencia" value="Ambos"><span>Ambos</span></label>
+        <label class="r-opt"><input type="radio" name="asistencia" value="Celebración"><span>Celebración</span></label>
+        <label class="r-opt"><input type="radio" name="asistencia" value="Ambos eventos"><span>Ambos eventos</span></label>
+        <label class="r-opt"><input type="radio" name="asistencia" value="No podré asistir"><span>No podré asistir</span></label>
       </div>
     </div>
     <button type="submit" class="f-submit" id="rsvpBtn">Confirmar asistencia</button>
@@ -1692,7 +1766,7 @@ const io = new IntersectionObserver(entries => {
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
 /* ─── FLOATING NAV DOTS (section tracking) ───────── */
-const SECS = ['hero','countdown','itinerario','galeria','dresscode','regalos','rsvp'];
+const SECS = ['hero','countdown','galeria','oracion','itinerario','dresscode','regalos','rsvp'];
 const dots = document.querySelectorAll('.sn');
 const navIO = new IntersectionObserver(entries => {
   entries.forEach(en => {
@@ -1755,12 +1829,6 @@ tick(); setInterval(tick, 1000);
   mq.addEventListener('change', apply);
 })();
 
-/* ─── TC SECTION REVEAL ─────────────────────────── */
-new IntersectionObserver(entries => {
-  entries.forEach(en => {
-    if (en.isIntersecting) { en.target.classList.add('vis'); }
-  });
-}, { threshold: .25 }).observe(document.querySelector('.tc-section'));
 
 /* ─── DRESSCODE ICONS — stroke draw on scroll ────── */
 new IntersectionObserver(entries => {
